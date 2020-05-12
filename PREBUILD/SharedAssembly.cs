@@ -16,10 +16,10 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.7437.19439")]
-[assembly: AssemblyFileVersion("1.0.7437.19439")]
+[assembly: AssemblyVersion("1.0.7437.31837")]
+[assembly: AssemblyFileVersion("1.0.7437.31837")]
 
 public static class AssemblyInfo
 {
-	public const string Version = "1.0.7437.19439";
+	public const string Version = "1.0.7437.31837";
 }

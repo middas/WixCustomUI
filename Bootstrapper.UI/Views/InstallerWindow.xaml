@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Installer Test" Height="450" Width="800">
     <Window.DataContext>
-        <vm:InstallerWindowViewModel/>
+        <vm:InstallerWindowViewModel />
     </Window.DataContext>
 
     <Window.Resources>
@@ -16,26 +16,26 @@
             <local:InstallControl />
         </DataTemplate>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200px"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="200px" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" Background="#E7E7E7">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" FontSize="24" Content="Navigation" HorizontalAlignment="Center"/>
+                <Label Grid.Row="0" FontSize="24" Content="Navigation" HorizontalAlignment="Center" />
 
                 <Grid Grid.Row="1">
                     <ListBox VerticalAlignment="Center" ItemsSource="{Binding Pages}" SelectedItem="{Binding CurrentPage}">
                         <ListBox.Template>
                             <ControlTemplate>
-                                <StackPanel IsItemsHost="True"/>
+                                <StackPanel IsItemsHost="True" />
                             </ControlTemplate>
                         </ListBox.Template>
                         <ListBox.ItemContainerStyle>
@@ -47,30 +47,30 @@
                                             <Border x:Name="ItemBorder" BorderThickness="2px">
                                                 <Grid Margin="4px">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="5px"/>
-                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="5px" />
+                                                        <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Border Grid.Column="0" x:Name="SelectionIndicator"/>
+                                                    <Border Grid.Column="0" x:Name="SelectionIndicator" />
 
-                                                    <Label Grid.Column="1" FontSize="16px" Content="{Binding}" Foreground="{TemplateBinding Foreground}"/>
+                                                    <Label Grid.Column="1" FontSize="16px" Content="{Binding}" Foreground="{TemplateBinding Foreground}" />
                                                 </Grid>
                                             </Border>
 
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter Property="Foreground" Value="#55000000"/>
+                                                    <Setter Property="Foreground" Value="#55000000" />
                                                 </Trigger>
                                                 <Trigger Property="IsSelected" Value="True">
-                                                    <Setter TargetName="SelectionIndicator" Property="Background" Value="#999999"/>
+                                                    <Setter TargetName="SelectionIndicator" Property="Background" Value="#999999" />
                                                 </Trigger>
                                                 <MultiTrigger>
                                                     <MultiTrigger.Conditions>
-                                                        <Condition Property="IsMouseOver" Value="True"/>
-                                                        <Condition Property="IsSelected" Value="False"/>
+                                                        <Condition Property="IsMouseOver" Value="True" />
+                                                        <Condition Property="IsSelected" Value="False" />
                                                     </MultiTrigger.Conditions>
                                                     <MultiTrigger.Setters>
-                                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#AAAAAA"/>
+                                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#AAAAAA" />
                                                     </MultiTrigger.Setters>
                                                 </MultiTrigger>
                                             </ControlTemplate.Triggers>

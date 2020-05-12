@@ -5,15 +5,25 @@ namespace Bootstrapper.UI.ViewModels
 {
     public class InstallerWindowViewModel : INotifyPropertyChanged
     {
+        private readonly BootstrapperEntry bootstrapper;
         private readonly InstallControlViewModel installControlViewModel;
 
         private ViewPage _CurrentPage;
         private ViewPage[] _Pages;
         private INotifyPropertyChanged _SelectedViewModel;
 
+        // This constructor is used for the design view only
         public InstallerWindowViewModel()
         {
             installControlViewModel = new InstallControlViewModel();
+            Pages = (ViewPage[])Enum.GetValues(typeof(ViewPage));
+            OnCurrentPageChanged(); // notify the UI what page we're starting on
+        }
+
+        public InstallerWindowViewModel(BootstrapperEntry bootstrapper)
+        {
+            this.bootstrapper = bootstrapper;
+            installControlViewModel = new InstallControlViewModel(bootstrapper);
             Pages = (ViewPage[])Enum.GetValues(typeof(ViewPage));
             OnCurrentPageChanged(); // notify the UI what page we're starting on
         }
@@ -64,10 +74,11 @@ namespace Bootstrapper.UI.ViewModels
 
         private void OnCurrentPageChanged()
         {
-            switch(CurrentPage)
+            switch (CurrentPage)
             {
                 case ViewPage.Features:
                     break;
+
                 case ViewPage.Installation:
                     SelectedViewModel = installControlViewModel;
                     break;

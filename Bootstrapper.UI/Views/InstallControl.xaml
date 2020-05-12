@@ -8,9 +8,6 @@
              xmlns:vm="clr-namespace:Bootstrapper.UI.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="600">
-    <UserControl.DataContext>
-        <vm:InstallControlViewModel />
-    </UserControl.DataContext>
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>

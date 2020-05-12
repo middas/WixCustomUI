@@ -7,7 +7,7 @@ namespace Bootstrapper.UI.ViewModels
 {
     public class InstallControlViewModel : INotifyPropertyChanged
     {
-        private readonly BootstrapperEntry Bootstrapper;
+        private readonly BootstrapperEntry bootstrapper;
 
         private bool _IsError;
         private bool _IsInstalling;
@@ -26,7 +26,7 @@ namespace Bootstrapper.UI.ViewModels
 
         public InstallControlViewModel(BootstrapperEntry bootstrapper)
         {
-            Bootstrapper = bootstrapper;
+            this.bootstrapper = bootstrapper;
 
             SetUiFromInstallState();
         }
@@ -108,27 +108,71 @@ namespace Bootstrapper.UI.ViewModels
 
         private void Install()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ValidateBootstrapper();
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                ResultMessage = $"Install failed:\n{ex.Message}";
+                IsError = true;
+            }
         }
 
         private void RepairModify()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ValidateBootstrapper();
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                ResultMessage = $"Repair/modify failed:\n{ex.Message}";
+                IsError = true;
+            }
         }
 
         private void SetUiFromInstallState()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
         private void Uninstall()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ValidateBootstrapper();
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                ResultMessage = $"Uninstall failed:\n{ex.Message}";
+                IsError = true;
+            }
         }
 
         private void Upgrade()
         {
-            throw new NotImplementedException();
+            try
+            {
+                ValidateBootstrapper();
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                ResultMessage = $"Upgrade failed:\n{ex.Message}";
+                IsError = true;
+            }
+        }
+
+        private void ValidateBootstrapper()
+        {
+            if (bootstrapper == null)
+            {
+                throw new InvalidOperationException("The bootstrapper was not initialized properly.");
+            }
         }
     }
 }
