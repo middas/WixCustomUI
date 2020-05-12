@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerTest", "InstallerTest\InstallerTest.csproj", "{F2AD1E4D-DF54-45CE-B368-9DA5FFF51992}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7FA9C60-AAD4-4055-8298-1B0C0826B529} = {C7FA9C60-AAD4-4055-8298-1B0C0826B529}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PREBUILD", "PREBUILD\PREBUILD.csproj", "{C7FA9C60-AAD4-4055-8298-1B0C0826B529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PREBUILD", "PREBUILD\PREBUILD.csproj", "{C7FA9C60-AAD4-4055-8298-1B0C0826B529}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Bootstrapper", "Bootstrapper\Bootstrapper.wixproj", "{1B9106F0-5BA8-4857-AC0A-C1BECBA1FE51}"
 EndProject

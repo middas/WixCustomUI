@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Bundle Name="Bootstrapper" Version="1.0.0.0" Manufacturer="Justin" UpgradeCode="1b9106f0-5ba8-4857-ac0a-c1becba1fe51">
+	<Bundle Name="Bootstrapper" Version="!(bind.packageVersion.Msi_Installer)" Manufacturer="Justin" UpgradeCode="1b9106f0-5ba8-4857-ac0a-c1becba1fe51">
     <BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost">
       <Payload SourceFile="$(var.Bootstrapper.UI.TargetPath)" />
-      <Payload SourceFile="$(var.Bootstrapper.UI.TargetDir)Bootstrapper.UI.dll.config"/>
+      <Payload SourceFile="$(var.Bootstrapper.UI.ProjectDir)BootstrapperCore.config"/>
       <Payload SourceFile="$(var.Bootstrapper.UI.TargetDir)BootstrapperCore.dll"/>
       <Payload SourceFile="$(var.Bootstrapper.UI.TargetDir)Microsoft.Deployment.WindowsInstaller.dll"/>
     </BootstrapperApplicationRef>
 
 		<Chain>
-      <MsiPackage SourceFile="$(var.Installer.TargetPath)" />
-			<!-- TODO: Define the list of chained packages. -->
-			<!-- <MsiPackage SourceFile="path\to\your.msi" /> -->
+      <PackageGroupRef Id="NetFx462Web"/>
+      
+      <MsiPackage Id="Msi_Installer" SourceFile="$(var.Installer.TargetPath)" />
 		</Chain>
 	</Bundle>
 </Wix>
