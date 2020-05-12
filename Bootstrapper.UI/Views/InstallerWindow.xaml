@@ -10,7 +10,80 @@
     <Window.DataContext>
         <vm:InstallerWindowViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:InstallControlViewModel}">
+            <local:InstallControl />
+        </DataTemplate>
+    </Window.Resources>
+    
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200px"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#E7E7E7">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" FontSize="24" Content="Navigation" HorizontalAlignment="Center"/>
+
+                <Grid Grid.Row="1">
+                    <ListBox VerticalAlignment="Center" ItemsSource="{Binding Pages}" SelectedItem="{Binding CurrentPage}">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <StackPanel IsItemsHost="True"/>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Foreground" Value="#000000" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <Border x:Name="ItemBorder" BorderThickness="2px">
+                                                <Grid Margin="4px">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="5px"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Border Grid.Column="0" x:Name="SelectionIndicator"/>
+
+                                                    <Label Grid.Column="1" FontSize="16px" Content="{Binding}" Foreground="{TemplateBinding Foreground}"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Foreground" Value="#55000000"/>
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="SelectionIndicator" Property="Background" Value="#999999"/>
+                                                </Trigger>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsMouseOver" Value="True"/>
+                                                        <Condition Property="IsSelected" Value="False"/>
+                                                    </MultiTrigger.Conditions>
+                                                    <MultiTrigger.Setters>
+                                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#AAAAAA"/>
+                                                    </MultiTrigger.Setters>
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <ContentControl Grid.Column="1" Content="{Binding SelectedViewModel}" />
     </Grid>
 </Window>

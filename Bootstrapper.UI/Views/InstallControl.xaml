@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="Bootstrapper.UI.Views.InstallControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Bootstrapper.UI.Views"
+             xmlns:converters="clr-namespace:Bootstrapper.UI.MVVM.Converters"
+             xmlns:vm="clr-namespace:Bootstrapper.UI.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="600">
+    <UserControl.DataContext>
+        <vm:InstallControlViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid Margin="10px">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header text -->
+        <StackPanel Grid.Row="0">
+            <TextBlock FontSize="24px" Text="Installation" Padding="16px" />
+            <TextBlock TextWrapping="Wrap" Text="This page shows the install controls, installation progress, and installation result. Any errors before or after the install should be displayed here." FontSize="14px" />
+        </StackPanel>
+
+        <!-- Installation progress -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Bottom">
+                <Label Content="Installation progress" FontSize="16px" Margin="0 0 0 5" />
+                <ProgressBar IsIndeterminate="{Binding IsInstalling}" Height="24px" Margin="0 0 0 5" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="1" Text="{Binding ResultMessage}" FontSize="18px">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Foreground" Value="Green" />
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsError}" Value="True">
+                                <Setter Property="Foreground" Value="Red" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+
+        <!-- Installation control buttons -->
+        <Grid Grid.Row="2">
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="3px" />
+                    <Setter Property="FontSize" Value="16px" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Install" Grid.ColumnSpan="2" Visibility="{Binding ShowInstall, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding InstallCommand}" />
+            <Button Content="Upgrade" Grid.ColumnSpan="2" Visibility="{Binding ShowUpgrade, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding UpgradeCommand}" />
+            <Button Grid.Column="0" Content="Repair" Visibility="{Binding ShowRepairUninstall, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding RepairModifyCommand}" />
+            <Button Grid.Column="1" Content="Uninstall" Visibility="{Binding ShowRepairUninstall, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding UninstallCommand}" />
+        </Grid>
+    </Grid>
+</UserControl>
