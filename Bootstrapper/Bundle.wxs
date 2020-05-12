@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Bundle Name="Bootstrapper" Version="1.0.0.0" Manufacturer="Justin" UpgradeCode="1b9106f0-5ba8-4857-ac0a-c1becba1fe51">
-		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+    <BootstrapperApplicationRef Id="ManagedBootstrapperApplicationHost">
+      <Payload SourceFile="$(var.Bootstrapper.UI.TargetPath)" />
+      <Payload SourceFile="$(var.Bootstrapper.UI.TargetDir)Bootstrapper.UI.dll.config"/>
+      <Payload SourceFile="$(var.Bootstrapper.UI.TargetDir)BootstrapperCore.dll"/>
+      <Payload SourceFile="$(var.Bootstrapper.UI.TargetDir)Microsoft.Deployment.WindowsInstaller.dll"/>
+    </BootstrapperApplicationRef>
 
 		<Chain>
       <MsiPackage SourceFile="$(var.Installer.TargetPath)" />

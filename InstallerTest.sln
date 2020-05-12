@@ -11,6 +11,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Bootstrapper", "Bootstrappe
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{CB33E634-2717-49D5-A098-B1A55E9B9B5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrapper.UI", "Bootstrapper.UI\Bootstrapper.UI.csproj", "{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,14 @@ Global
 		{CB33E634-2717-49D5-A098-B1A55E9B9B5C}.Release|Any CPU.ActiveCfg = Release|x86
 		{CB33E634-2717-49D5-A098-B1A55E9B9B5C}.Release|x86.ActiveCfg = Release|x86
 		{CB33E634-2717-49D5-A098-B1A55E9B9B5C}.Release|x86.Build.0 = Release|x86
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Debug|x86.Build.0 = Debug|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
