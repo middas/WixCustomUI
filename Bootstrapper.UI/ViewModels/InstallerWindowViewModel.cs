@@ -7,6 +7,7 @@ namespace Bootstrapper.UI.ViewModels
     {
         private readonly BootstrapperEntry bootstrapper;
         private readonly InstallControlViewModel installControlViewModel;
+        private readonly FeaturesControlViewModel featuresControlViewModel;
 
         private ViewPage _CurrentPage;
         private ViewPage[] _Pages;
@@ -16,6 +17,7 @@ namespace Bootstrapper.UI.ViewModels
         public InstallerWindowViewModel()
         {
             installControlViewModel = new InstallControlViewModel();
+            featuresControlViewModel = new FeaturesControlViewModel();
             Pages = (ViewPage[])Enum.GetValues(typeof(ViewPage));
             OnCurrentPageChanged(); // notify the UI what page we're starting on
         }
@@ -24,6 +26,7 @@ namespace Bootstrapper.UI.ViewModels
         {
             this.bootstrapper = bootstrapper;
             installControlViewModel = new InstallControlViewModel(bootstrapper);
+            featuresControlViewModel = new FeaturesControlViewModel(bootstrapper);
             Pages = (ViewPage[])Enum.GetValues(typeof(ViewPage));
             OnCurrentPageChanged(); // notify the UI what page we're starting on
         }
@@ -77,6 +80,7 @@ namespace Bootstrapper.UI.ViewModels
             switch (CurrentPage)
             {
                 case ViewPage.Features:
+                    SelectedViewModel = featuresControlViewModel;
                     break;
 
                 case ViewPage.Installation:

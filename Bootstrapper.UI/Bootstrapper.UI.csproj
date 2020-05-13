@@ -66,8 +66,12 @@
     <Compile Include="BootstrapperEntry.cs" />
     <Compile Include="MVVM\Commands\ActionCommand.cs" />
     <Compile Include="MVVM\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ViewModels\FeaturesControlViewModel.cs" />
     <Compile Include="ViewModels\InstallControlViewModel.cs" />
     <Compile Include="ViewModels\InstallerWindowViewModel.cs" />
+    <Compile Include="Views\FeaturesControl.xaml.cs">
+      <DependentUpon>FeaturesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InstallControl.xaml.cs">
       <DependentUpon>InstallControl.xaml</DependentUpon>
     </Compile>
@@ -102,6 +106,10 @@
     <None Include="BootstrapperCore.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\FeaturesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InstallControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

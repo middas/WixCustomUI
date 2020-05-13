@@ -5,16 +5,16 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerTest", "InstallerTest\InstallerTest.csproj", "{F2AD1E4D-DF54-45CE-B368-9DA5FFF51992}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529} = {C7FA9C60-AAD4-4055-8298-1B0C0826B529}
+		{7220CDAC-CD94-4DC9-9626-5471149B5387} = {7220CDAC-CD94-4DC9-9626-5471149B5387}
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PREBUILD", "PREBUILD\PREBUILD.csproj", "{C7FA9C60-AAD4-4055-8298-1B0C0826B529}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Bootstrapper", "Bootstrapper\Bootstrapper.wixproj", "{1B9106F0-5BA8-4857-AC0A-C1BECBA1FE51}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{CB33E634-2717-49D5-A098-B1A55E9B9B5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrapper.UI", "Bootstrapper.UI\Bootstrapper.UI.csproj", "{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PREBUILD", "PREBUILD\PREBUILD.csproj", "{7220CDAC-CD94-4DC9-9626-5471149B5387}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,14 +32,6 @@ Global
 		{F2AD1E4D-DF54-45CE-B368-9DA5FFF51992}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2AD1E4D-DF54-45CE-B368-9DA5FFF51992}.Release|x86.ActiveCfg = Release|Any CPU
 		{F2AD1E4D-DF54-45CE-B368-9DA5FFF51992}.Release|x86.Build.0 = Release|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Debug|x86.Build.0 = Debug|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Release|x86.ActiveCfg = Release|Any CPU
-		{C7FA9C60-AAD4-4055-8298-1B0C0826B529}.Release|x86.Build.0 = Release|Any CPU
 		{1B9106F0-5BA8-4857-AC0A-C1BECBA1FE51}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{1B9106F0-5BA8-4857-AC0A-C1BECBA1FE51}.Debug|x86.ActiveCfg = Debug|x86
 		{1B9106F0-5BA8-4857-AC0A-C1BECBA1FE51}.Debug|x86.Build.0 = Debug|x86
@@ -60,6 +52,14 @@ Global
 		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|x86.ActiveCfg = Release|Any CPU
 		{D7AD4F81-AC10-4EDC-9EF7-6B964F4D6297}.Release|x86.Build.0 = Release|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Debug|x86.Build.0 = Debug|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Release|x86.ActiveCfg = Release|Any CPU
+		{7220CDAC-CD94-4DC9-9626-5471149B5387}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

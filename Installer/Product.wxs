@@ -9,6 +9,9 @@
 		<Feature Id="ProductFeature" Title="Installer" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
+    <Feature Id="OptionalFeature" Title="Optional" Level="0">
+      <ComponentGroupRef Id="OptionalComponents"/>
+    </Feature>
 	</Product>
 
 	<Fragment>
@@ -29,5 +32,11 @@
 				<!-- TODO: Insert files, registry keys, and other resources here. -->
 			<!-- </Component> -->
 		</ComponentGroup>
+
+    <ComponentGroup Id="OptionalComponents" Directory="INSTALLFOLDER">
+      <Component Id="Feature1" Guid="0F480554-1F7B-4277-8941-EFDC09C144FC">
+        <File Id="F_Feature1" Name="Feature1.txt" Source="$(var.InstallerTest.ProjectDir)Feature1.txt" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
 	</Fragment>
 </Wix>
