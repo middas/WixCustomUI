@@ -119,6 +119,16 @@ namespace Bootstrapper.UI
 
                 Engine.Quit(0);
             }
+            else
+            {
+                DetectComplete += (sender, args) => Plan(Command.Action);
+                PlanComplete += (sender, args) => Execute();
+                ExecuteComplete += (sender, args) => Engine.Quit(args.Status);
+
+                Detect();
+
+                Dispatcher.Run();
+            }
         }
 
         private void InitializePackages()
