@@ -123,7 +123,11 @@ namespace Bootstrapper.UI
             {
                 DetectComplete += (sender, args) => Plan(Command.Action);
                 PlanComplete += (sender, args) => Execute();
-                ExecuteComplete += (sender, args) => Engine.Quit(args.Status);
+                ExecuteComplete += (sender, args) =>
+                {
+                    Engine.Quit(args.Status);
+                    _BootstrapDispatcher.InvokeShutdown();
+                };
 
                 Detect();
 
