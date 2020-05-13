@@ -11,7 +11,7 @@
 		<Chain>
       <PackageGroupRef Id="NetFx462Web"/>
       
-      <MsiPackage Id="Msi_Installer" SourceFile="$(var.Installer.TargetPath)" EnableFeatureSelection="yes" />
+      <MsiPackage Id="Msi_Installer" SourceFile="$(var.Installer.TargetPath)" EnableFeatureSelection="yes" Compressed="yes" />
 		</Chain>
 	</Bundle>
 </Wix>

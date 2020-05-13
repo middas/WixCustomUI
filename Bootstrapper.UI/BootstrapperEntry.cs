@@ -13,18 +13,49 @@ namespace Bootstrapper.UI
 {
     public class BootstrapperEntry : BootstrapperApplication
     {
+        internal const string PrimaryFeatureName = "ProductFeature";
         internal const string PrimaryPackageName = "Msi_Installer";
-        internal const string PrimaryFeatureName = "Installer";
 
         private readonly XNamespace ManifestName = "http://schemas.microsoft.com/wix/2010/BootstrapperApplicationData";
+
         private Dispatcher _BootstrapDispatcher;
         private InstallerWindowViewModel _InstallerWindowViewModel;
+
+        public bool IsInstalled
+        {
+            get
+            {
+                var package = Packages.First(pkg => pkg.Id == PrimaryPackageName);
+
+                return package.CurrentState == PackageState.Present;
+            }
+        }
+
+        public bool IsUpgrade
+        {
+            get
+            {
+                var package = Packages.First(pkg => pkg.Id == PrimaryPackageName);
+
+                return package.RelatedOperation == RelatedOperation.MajorUpgrade || package.RelatedOperation == RelatedOperation.MinorUpdate;
+            }
+        }
 
         internal BundlePackage[] Packages { get; private set; }
 
         internal void Detect()
         {
             Engine.Detect();
+        }
+
+        internal void Execute()
+        {
+            Engine.Apply(Process.GetCurrentProcess().MainWindowHandle);
+        }
+
+        internal void Plan(LaunchAction launchAction)
+        {
+            Engine.Plan(launchAction);
         }
 
         protected override void OnDetectMsiFeature(DetectMsiFeatureEventArgs args)
@@ -60,26 +91,6 @@ namespace Bootstrapper.UI
             var package = Packages.First(pkg => pkg.Id == args.PackageId);
             package.InstalledVersion = args.Version;
             package.RelatedOperation = args.Operation;
-        }
-
-        public bool IsUpgrade
-        {
-            get
-            {
-                var package = Packages.First(pkg => pkg.Id == PrimaryPackageName);
-
-                return package.CurrentState == PackageState.Superseded;
-            }
-        }
-
-        public bool IsInstalled
-        {
-            get
-            {
-                var package = Packages.First(pkg => pkg.Id == PrimaryPackageName);
-
-                return package.CurrentState == PackageState.Present;
-            }
         }
 
         protected override void Run()

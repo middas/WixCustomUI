@@ -9,7 +9,7 @@
 		<Feature Id="ProductFeature" Title="Installer" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
-    <Feature Id="OptionalFeature" Title="Optional" Level="0">
+    <Feature Id="OptionalFeature" Title="Optional">
       <ComponentGroupRef Id="OptionalComponents"/>
     </Feature>
 	</Product>

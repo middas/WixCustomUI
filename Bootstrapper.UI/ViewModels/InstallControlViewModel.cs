@@ -1,6 +1,8 @@
 ﻿using Bootstrapper.UI.MVVM.Commands;
+using Microsoft.Tools.WindowsInstallerXml.Bootstrapper;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Bootstrapper.UI.ViewModels
@@ -29,6 +31,11 @@ namespace Bootstrapper.UI.ViewModels
             this.bootstrapper = bootstrapper;
 
             bootstrapper.DetectComplete += (sender, args) => SetUiFromInstallState();
+            bootstrapper.PlanComplete += (sender, args) => PlanComplete();
+            bootstrapper.PlanMsiFeature += (sender, args) => PlanFeature(args);
+            bootstrapper.PlanTargetMsiPackage += (sender, args) => PlanPackage(args);
+            bootstrapper.ApplyBegin += (sender, args) => IsInstalling = true;
+            bootstrapper.ApplyComplete += (sender, args) => ApplyComplete(args);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,6 +45,7 @@ namespace Bootstrapper.UI.ViewModels
         public bool IsError
         {
             get => _IsError;
+
             set
             {
                 _IsError = value;
@@ -48,6 +56,7 @@ namespace Bootstrapper.UI.ViewModels
         public bool IsInstalling
         {
             get => _IsInstalling;
+
             set
             {
                 _IsInstalling = value;
@@ -60,6 +69,7 @@ namespace Bootstrapper.UI.ViewModels
         public string ResultMessage
         {
             get => _ResultMessage;
+
             set
             {
                 _ResultMessage = value;
@@ -70,6 +80,7 @@ namespace Bootstrapper.UI.ViewModels
         public bool ShowInstall
         {
             get => _ShowInstall;
+
             set
             {
                 _ShowInstall = value;
@@ -80,6 +91,7 @@ namespace Bootstrapper.UI.ViewModels
         public bool ShowRepairUninstall
         {
             get => _ShowRepairUninstall;
+
             set
             {
                 _ShowRepairUninstall = value;
@@ -90,6 +102,7 @@ namespace Bootstrapper.UI.ViewModels
         public bool ShowUpgrade
         {
             get => _ShowUpgrade;
+
             set
             {
                 _ShowUpgrade = value;
@@ -101,6 +114,26 @@ namespace Bootstrapper.UI.ViewModels
 
         public ICommand UpgradeCommand { get => new ActionCommand(Upgrade); }
 
+        private void ApplyComplete(ApplyCompleteEventArgs args)
+        {
+            IsInstalling = false;
+            string installMessage = isUninstall ? "uninstall" : "install";
+            isUninstall = false;
+
+            if (args.Status == 0)
+            {
+                ResultMessage = $"Successfully {installMessage}ed";
+                IsError = false;
+            }
+            else
+            {
+                ResultMessage = $"Failed to {installMessage}";
+                IsError = true;
+            }
+
+            bootstrapper.Detect();
+        }
+
         private void FirePropertyChanged(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
@@ -111,7 +144,16 @@ namespace Bootstrapper.UI.ViewModels
             try
             {
                 ValidateBootstrapper();
-                throw new NotImplementedException();
+
+                var package = bootstrapper.Packages.First(pkg => pkg.Id == BootstrapperEntry.PrimaryPackageName);
+                package.PlanState = RequestState.Present;
+                var primaryFeature = package.Features.First(f => f.Feature == BootstrapperEntry.PrimaryFeatureName);
+                primaryFeature.PlanState = FeatureState.Local;
+
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {primaryFeature.Feature}, Plan: {primaryFeature.PlanState}");
+
+                bootstrapper.Plan(LaunchAction.Install);
             }
             catch (Exception ex)
             {
@@ -120,12 +162,44 @@ namespace Bootstrapper.UI.ViewModels
             }
         }
 
+        private void PlanComplete()
+        {
+            bootstrapper.Execute();
+        }
+
+        private void PlanFeature(PlanMsiFeatureEventArgs args)
+        {
+            var feature = bootstrapper.Packages.First(pkg => pkg.Id == args.PackageId).Features.First(f => f.Feature == args.FeatureId);
+            args.State = feature.PlanState;
+
+            bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {feature.Feature}, Plan: {feature.PlanState}");
+        }
+
+        private void PlanPackage(PlanTargetMsiPackageEventArgs args)
+        {
+            var package = bootstrapper.Packages.First(pkg => pkg.Id == args.PackageId);
+            args.State = package.PlanState;
+
+            bootstrapper.Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
+        }
+
         private void RepairModify()
         {
             try
             {
                 ValidateBootstrapper();
-                throw new NotImplementedException();
+
+                bool isRepair = bootstrapper.Packages.SelectMany(pkg => pkg.Features).All(f => f.PlanState == f.CurrentState);
+
+                var package = bootstrapper.Packages.First(pkg => pkg.Id == BootstrapperEntry.PrimaryPackageName);
+                package.PlanState = isRepair ? RequestState.Repair : RequestState.Present;
+                var primaryFeature = package.Features.First(f => f.Feature == BootstrapperEntry.PrimaryFeatureName);
+                primaryFeature.PlanState = FeatureState.Local;
+
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {primaryFeature.Feature}, Plan: {primaryFeature.PlanState}");
+
+                bootstrapper.Plan(isRepair ? LaunchAction.Repair : LaunchAction.Modify);
             }
             catch (Exception ex)
             {
@@ -141,12 +215,28 @@ namespace Bootstrapper.UI.ViewModels
             ShowRepairUninstall = !ShowInstall && !ShowUpgrade;
         }
 
+        private bool isUninstall = false;
+
         private void Uninstall()
         {
             try
             {
                 ValidateBootstrapper();
-                throw new NotImplementedException();
+
+                var package = bootstrapper.Packages.First(pkg => pkg.Id == BootstrapperEntry.PrimaryPackageName);
+                package.PlanState = RequestState.ForceAbsent;
+
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
+
+                foreach (var feature in package.Features)
+                {
+                    feature.PlanState = FeatureState.Absent;
+
+                    bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {feature.Feature}, Plan: {feature.PlanState}");
+                }
+
+                isUninstall = true;
+                bootstrapper.Plan(LaunchAction.Uninstall);
             }
             catch (Exception ex)
             {
@@ -160,7 +250,16 @@ namespace Bootstrapper.UI.ViewModels
             try
             {
                 ValidateBootstrapper();
-                throw new NotImplementedException();
+
+                var package = bootstrapper.Packages.First(pkg => pkg.Id == BootstrapperEntry.PrimaryPackageName);
+                package.PlanState = RequestState.Present;
+                var primaryFeature = package.Features.First(f => f.Feature == BootstrapperEntry.PrimaryFeatureName);
+                primaryFeature.PlanState = FeatureState.Local;
+
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
+                bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {primaryFeature.Feature}, Plan: {primaryFeature.PlanState}");
+
+                bootstrapper.Plan(LaunchAction.Install);
             }
             catch (Exception ex)
             {
