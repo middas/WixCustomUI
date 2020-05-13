@@ -28,7 +28,7 @@ namespace Bootstrapper.UI.ViewModels
         {
             this.bootstrapper = bootstrapper;
 
-            SetUiFromInstallState();
+            bootstrapper.DetectComplete += (sender, args) => SetUiFromInstallState();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -136,7 +136,9 @@ namespace Bootstrapper.UI.ViewModels
 
         private void SetUiFromInstallState()
         {
-            //TODO
+            ShowInstall = !bootstrapper.IsInstalled;
+            ShowUpgrade = bootstrapper.IsUpgrade;
+            ShowRepairUninstall = !ShowInstall && !ShowUpgrade;
         }
 
         private void Uninstall()

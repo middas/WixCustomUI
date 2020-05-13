@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Tools.WindowsInstallerXml.Bootstrapper;
+using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Bootstrapper.UI.ViewModels
 {
@@ -19,7 +21,7 @@ namespace Bootstrapper.UI.ViewModels
         {
             this.bootstrapper = bootstrapper;
 
-            SetUiFromInstallState();
+            bootstrapper.DetectComplete += (sender,  args) => SetUiFromInstallState();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -47,7 +49,18 @@ namespace Bootstrapper.UI.ViewModels
 
         private void SetUiFromInstallState()
         {
-            //TODO
+            const string FeatureName = "Feature1";
+
+            if(!bootstrapper.IsInstalled)
+            {
+                InstallFeature1 = true;
+            }
+            else
+            {
+                InstallFeature1 = bootstrapper.Packages.First(pkg => pkg.Id == BootstrapperEntry.PrimaryPackageName)
+                                              .Features.First(f => f.Feature == FeatureName)
+                                              .CurrentState == FeatureState.Local;
+            }
         }
     }
 }

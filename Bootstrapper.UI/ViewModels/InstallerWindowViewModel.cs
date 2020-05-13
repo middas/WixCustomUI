@@ -29,6 +29,8 @@ namespace Bootstrapper.UI.ViewModels
             featuresControlViewModel = new FeaturesControlViewModel(bootstrapper);
             Pages = (ViewPage[])Enum.GetValues(typeof(ViewPage));
             OnCurrentPageChanged(); // notify the UI what page we're starting on
+
+            bootstrapper.Detect();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

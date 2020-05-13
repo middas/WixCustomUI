@@ -64,8 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapperEntry.cs" />
+    <Compile Include="BundlePackage.cs" />
+    <Compile Include="MbaPrereqPackage.cs" />
     <Compile Include="MVVM\Commands\ActionCommand.cs" />
     <Compile Include="MVVM\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="PackageFeature.cs" />
     <Compile Include="ViewModels\FeaturesControlViewModel.cs" />
     <Compile Include="ViewModels\InstallControlViewModel.cs" />
     <Compile Include="ViewModels\InstallerWindowViewModel.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Views\InstallerWindow.xaml.cs">
       <DependentUpon>InstallerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XAttributeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
