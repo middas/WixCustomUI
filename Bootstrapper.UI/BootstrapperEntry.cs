@@ -101,6 +101,24 @@ namespace Bootstrapper.UI
             package.RelatedOperation = args.Operation;
         }
 
+        protected override void OnPlanMsiFeature(PlanMsiFeatureEventArgs args)
+        {
+            base.OnPlanMsiFeature(args);
+
+            var feature = Packages.First(pkg => pkg.Id == args.PackageId).Features.First(f => f.Feature == args.FeatureId);
+            args.State = feature.PlanState;
+
+            Engine.Log(LogLevel.Standard, $"Feature: {feature.Feature}, Plan: {feature.PlanState}");
+        }
+
+        protected override void OnPlanTargetMsiPackage(PlanTargetMsiPackageEventArgs args)
+        {
+            var package = Packages.First(pkg => pkg.Id == args.PackageId);
+            args.State = package.PlanState;
+
+            Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
+        }
+
         protected override void OnResolveSource(ResolveSourceEventArgs args)
         {
             base.OnResolveSource(args);

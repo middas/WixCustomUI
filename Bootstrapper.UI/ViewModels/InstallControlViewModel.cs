@@ -33,8 +33,6 @@ namespace Bootstrapper.UI.ViewModels
 
             bootstrapper.DetectComplete += (sender, args) => SetUiFromInstallState();
             bootstrapper.PlanComplete += (sender, args) => PlanComplete();
-            bootstrapper.PlanMsiFeature += (sender, args) => PlanFeature(args);
-            bootstrapper.PlanTargetMsiPackage += (sender, args) => PlanPackage(args);
             bootstrapper.ApplyBegin += (sender, args) => IsInstalling = true;
             bootstrapper.ApplyComplete += (sender, args) => ApplyComplete(args);
         }
@@ -166,22 +164,6 @@ namespace Bootstrapper.UI.ViewModels
         private void PlanComplete()
         {
             bootstrapper.Execute();
-        }
-
-        private void PlanFeature(PlanMsiFeatureEventArgs args)
-        {
-            var feature = bootstrapper.Packages.First(pkg => pkg.Id == args.PackageId).Features.First(f => f.Feature == args.FeatureId);
-            args.State = feature.PlanState;
-
-            bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {feature.Feature}, Plan: {feature.PlanState}");
-        }
-
-        private void PlanPackage(PlanTargetMsiPackageEventArgs args)
-        {
-            var package = bootstrapper.Packages.First(pkg => pkg.Id == args.PackageId);
-            args.State = package.PlanState;
-
-            bootstrapper.Engine.Log(LogLevel.Standard, $"Package: {package.DisplayName}, Plan: {package.PlanState}");
         }
 
         private void RepairModify()
