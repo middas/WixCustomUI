@@ -93,6 +93,21 @@ namespace Bootstrapper.UI
             package.RelatedOperation = args.Operation;
         }
 
+        protected override void OnResolveSource(ResolveSourceEventArgs args)
+        {
+            base.OnResolveSource(args);
+
+            // allow downloads
+            if (!string.IsNullOrWhiteSpace(args.DownloadSource))
+            {
+                args.Result = Result.Download;
+            }
+            else
+            {
+                args.Result = Result.Ok;
+            }
+        }
+
         protected override void Run()
         {
             WaitForDebugger();
