@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PREBUILD
+﻿namespace PREBUILD
 {
-    class Dummy
+    internal class Dummy
     {
     }
 }

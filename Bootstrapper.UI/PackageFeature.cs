@@ -45,10 +45,11 @@ namespace Bootstrapper.UI
 
         public string Parent { get; private set; }
 
+        public FeatureState PlanState { get; internal set; }
+
         public long Size { get; private set; }
 
         public string Title { get; private set; }
-        public FeatureState PlanState { get; internal set; }
 
         public override string ToString() => $"{PackageId} - {Title}";
     }

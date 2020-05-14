@@ -48,10 +48,11 @@ namespace Bootstrapper.UI
 
         public bool Permanent { get; private set; }
 
+        public RequestState PlanState { get; internal set; }
+
         public RelatedOperation RelatedOperation { get; internal set; } = RelatedOperation.None;
 
         public bool Vital { get; private set; }
-        public RequestState PlanState { get; internal set; }
 
         public override string ToString() => DisplayName;
     }

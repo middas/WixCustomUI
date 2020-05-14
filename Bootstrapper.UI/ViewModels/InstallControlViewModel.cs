@@ -13,6 +13,7 @@ namespace Bootstrapper.UI.ViewModels
 
         private bool _IsError;
         private bool _IsInstalling;
+        private bool _IsUninstall = false;
         private string _ResultMessage;
         private bool _ShowInstall;
         private bool _ShowRepairUninstall;
@@ -117,8 +118,8 @@ namespace Bootstrapper.UI.ViewModels
         private void ApplyComplete(ApplyCompleteEventArgs args)
         {
             IsInstalling = false;
-            string installMessage = isUninstall ? "uninstall" : "install";
-            isUninstall = false;
+            string installMessage = _IsUninstall ? "uninstall" : "install";
+            _IsUninstall = false;
 
             if (args.Status == 0)
             {
@@ -215,8 +216,6 @@ namespace Bootstrapper.UI.ViewModels
             ShowRepairUninstall = !ShowInstall && !ShowUpgrade;
         }
 
-        private bool isUninstall = false;
-
         private void Uninstall()
         {
             try
@@ -235,7 +234,7 @@ namespace Bootstrapper.UI.ViewModels
                     bootstrapper.Engine.Log(LogLevel.Standard, $"Feature: {feature.Feature}, Plan: {feature.PlanState}");
                 }
 
-                isUninstall = true;
+                _IsUninstall = true;
                 bootstrapper.Plan(LaunchAction.Uninstall);
             }
             catch (Exception ex)

@@ -8,15 +8,15 @@
              d:DesignHeight="450" d:DesignWidth="600">
     <Grid Margin="10px">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <Label FontSize="24px" Padding="16px" Content="Features"/>
-            <TextBlock FontSize="14px" TextWrapping="Wrap" Text="This is where the list of optional features can be selected for installation or uninstallation."/>
+            <Label FontSize="24px" Padding="16px" Content="Features" />
+            <TextBlock FontSize="14px" TextWrapping="Wrap" Text="This is where the list of optional features can be selected for installation or uninstallation." />
         </StackPanel>
 
-        <CheckBox Grid.Row="1" VerticalAlignment="Center" Content="Feature 1" FontSize="18px" IsChecked="{Binding InstallFeature1}" VerticalContentAlignment="Center"/>
+        <CheckBox Grid.Row="1" VerticalAlignment="Center" Content="Feature 1" FontSize="18px" IsChecked="{Binding InstallFeature1}" VerticalContentAlignment="Center" />
     </Grid>
 </UserControl>

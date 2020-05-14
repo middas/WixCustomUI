@@ -6,8 +6,8 @@ namespace Bootstrapper.UI.ViewModels
     public class InstallerWindowViewModel : INotifyPropertyChanged
     {
         private readonly BootstrapperEntry bootstrapper;
-        private readonly InstallControlViewModel installControlViewModel;
         private readonly FeaturesControlViewModel featuresControlViewModel;
+        private readonly InstallControlViewModel installControlViewModel;
 
         private ViewPage _CurrentPage;
         private ViewPage[] _Pages;
