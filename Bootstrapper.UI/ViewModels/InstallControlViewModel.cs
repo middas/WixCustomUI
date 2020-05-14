@@ -18,6 +18,7 @@ namespace Bootstrapper.UI.ViewModels
         private bool _ShowInstall;
         private bool _ShowRepairUninstall;
         private bool _ShowUpgrade;
+        private bool _RestartRequired = false;
 
         // This constructor is used for the design view only
         public InstallControlViewModel()
@@ -35,6 +36,7 @@ namespace Bootstrapper.UI.ViewModels
             bootstrapper.PlanComplete += (sender, args) => PlanComplete();
             bootstrapper.ApplyBegin += (sender, args) => IsInstalling = true;
             bootstrapper.ApplyComplete += (sender, args) => ApplyComplete(args);
+            bootstrapper.RestartRequired += (sender, args) => _RestartRequired = args.Restart;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -119,14 +121,14 @@ namespace Bootstrapper.UI.ViewModels
             string installMessage = _IsUninstall ? "uninstall" : "install";
             _IsUninstall = false;
 
-            if (args.Status == 0)
+            if (args.Status >= 0)
             {
                 ResultMessage = $"Successfully {installMessage}ed";
                 IsError = false;
             }
             else
             {
-                ResultMessage = $"Failed to {installMessage}";
+                ResultMessage = _RestartRequired ? $"A restart is required to finish the {installMessage}ation" : $"Failed to {installMessage}";
                 IsError = true;
             }
 
@@ -193,9 +195,9 @@ namespace Bootstrapper.UI.ViewModels
 
         private void SetUiFromInstallState()
         {
-            ShowInstall = !bootstrapper.IsInstalled;
-            ShowUpgrade = bootstrapper.IsUpgrade;
-            ShowRepairUninstall = !ShowInstall && !ShowUpgrade;
+            ShowInstall = !bootstrapper.IsInstalled && !_RestartRequired;
+            ShowUpgrade = bootstrapper.IsUpgrade && !_RestartRequired;
+            ShowRepairUninstall = !ShowInstall && !ShowUpgrade && !_RestartRequired;
         }
 
         private void Uninstall()
