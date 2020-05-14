@@ -28,7 +28,7 @@ namespace Bootstrapper.UI
             {
                 var package = Packages.First(pkg => pkg.Id == PrimaryPackageName);
 
-                return package.CurrentState == PackageState.Present;
+                return package.CurrentState == PackageState.Present || package.InstalledVersion == null;
             }
         }
 
@@ -64,6 +64,24 @@ namespace Bootstrapper.UI
             base.OnApplyComplete(args);
 
             _ErrorCode = args.Status;
+        }
+
+        protected override void OnDetectBegin(DetectBeginEventArgs args)
+        {
+            base.OnDetectBegin(args);
+
+            // reset packages and features back to default state
+            foreach (var package in Packages)
+            {
+                package.PlanState = RequestState.None;
+                package.RelatedOperation = RelatedOperation.None;
+                package.InstalledVersion = null;
+
+                foreach (var feature in package.Features)
+                {
+                    feature.PlanState = FeatureState.Unknown;
+                }
+            }
         }
 
         protected override void OnDetectMsiFeature(DetectMsiFeatureEventArgs args)

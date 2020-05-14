@@ -37,6 +37,7 @@ namespace Bootstrapper.UI.ViewModels
             bootstrapper.ApplyBegin += (sender, args) => IsInstalling = true;
             bootstrapper.ApplyComplete += (sender, args) => ApplyComplete(args);
             bootstrapper.RestartRequired += (sender, args) => _RestartRequired = args.Restart;
+            bootstrapper.ExecutePackageComplete += (sender, args) => _RestartRequired = args.Restart == ApplyRestart.RestartRequired;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
