@@ -19,6 +19,7 @@ namespace Bootstrapper.UI
         private readonly XNamespace ManifestName = "http://schemas.microsoft.com/wix/2010/BootstrapperApplicationData";
 
         private Dispatcher _BootstrapDispatcher;
+        private int _ErrorCode = 0;
         private InstallerWindowViewModel _InstallerWindowViewModel;
 
         public bool IsInstalled
@@ -56,6 +57,13 @@ namespace Bootstrapper.UI
         internal void Plan(LaunchAction launchAction)
         {
             Engine.Plan(launchAction);
+        }
+
+        protected override void OnApplyComplete(ApplyCompleteEventArgs args)
+        {
+            base.OnApplyComplete(args);
+
+            _ErrorCode = args.Status;
         }
 
         protected override void OnDetectMsiFeature(DetectMsiFeatureEventArgs args)
@@ -132,7 +140,7 @@ namespace Bootstrapper.UI
 
                 Dispatcher.Run();
 
-                Engine.Quit(0);
+                Engine.Quit(_ErrorCode);
             }
             else
             {
